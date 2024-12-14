@@ -1,3 +1,4 @@
-abstract class MenuRepo{
-  
+
+abstract class MenuRepo {
+  Future<String> fetchMenus();
 }

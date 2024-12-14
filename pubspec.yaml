@@ -21,7 +21,11 @@ dev_dependencies:
   
 
 flutter:
+
+
+
   uses-material-design: true
 
-assets:
+
+  assets:
     - assets/data/assignment_dataset.json
