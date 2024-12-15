@@ -1,4 +1,4 @@
 
-abstract class MenuRepo {
+abstract class AllFood {
   Future<String> fetchMenus();
 }

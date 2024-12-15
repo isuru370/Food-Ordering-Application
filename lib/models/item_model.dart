@@ -49,10 +49,16 @@ class MenuItem extends Equatable {
       menuItemID: json['MenuItemID'] as String?,
       storeID: json['StoreID'] as String?,
       title: json['Title'] != null ? Title.fromJson(json['Title']) : null,
-      description: json['Description'] != null ? Title.fromJson(json['Description']) : null,
+      description: json['Description'] != null
+          ? Title.fromJson(json['Description'])
+          : null,
       imageURL: json['ImageURL'] as String?,
-      priceInfo: json['PriceInfo'] != null ? PriceInfo.fromJson(json['PriceInfo']) : null,
-      quantityInfo: json['QuantityInfo'] != null ? QuantityInfo.fromJson(json['QuantityInfo']) : null,
+      priceInfo: json['PriceInfo'] != null
+          ? PriceInfo.fromJson(json['PriceInfo'])
+          : null,
+      quantityInfo: json['QuantityInfo'] != null
+          ? QuantityInfo.fromJson(json['QuantityInfo'])
+          : null,
       suspensionRules: json['SuspensionRules'] != null
           ? SuspensionRules.fromJson(json['SuspensionRules'])
           : null,
@@ -62,14 +68,23 @@ class MenuItem extends Equatable {
       rewardGroupRules: json['RewardGroupRules'] != null
           ? RewardGroupRules.fromJson(json['RewardGroupRules'])
           : null,
-      taxInfo: json['TaxInfo'] != null ? TaxInfo.fromJson(json['TaxInfo']) : null,
-      nutrientData: json['NutrientData'] != null ? NutrientData.fromJson(json['NutrientData']) : null,
-      dishInfo: json['DishInfo'] != null ? DishInfo.fromJson(json['DishInfo']) : null,
-      visibilityInfo: json['VisibilityInfo'] != null ? VisibilityInfo.fromJson(json['VisibilityInfo']) : null,
-      productInfo: json['ProductInfo'] != null ? ProductInfo.fromJson(json['ProductInfo']) : null,
+      taxInfo:
+          json['TaxInfo'] != null ? TaxInfo.fromJson(json['TaxInfo']) : null,
+      nutrientData: json['NutrientData'] != null
+          ? NutrientData.fromJson(json['NutrientData'])
+          : null,
+      dishInfo:
+          json['DishInfo'] != null ? DishInfo.fromJson(json['DishInfo']) : null,
+      visibilityInfo: json['VisibilityInfo'] != null
+          ? VisibilityInfo.fromJson(json['VisibilityInfo'])
+          : null,
+      productInfo: json['ProductInfo'] != null
+          ? ProductInfo.fromJson(json['ProductInfo'])
+          : null,
       categoryIDs: (json['CategoryIDs'] as List<dynamic>?)?.cast<String>(),
       allergens: (json['Allergens'] as List<dynamic>?)?.cast<String>(),
-      metaData: json['MetaData'] != null ? MetaData.fromJson(json['MetaData']) : null,
+      metaData:
+          json['MetaData'] != null ? MetaData.fromJson(json['MetaData']) : null,
     );
   }
 
@@ -127,9 +142,9 @@ class PriceInfo extends Equatable {
 }
 
 class Price extends Equatable {
-  final int? deliveryPrice;
-  final int? pickupPrice;
-  final int? tablePrice;
+  final double? deliveryPrice;
+  final double? pickupPrice;
+  final double? tablePrice;
 
   const Price({
     this.deliveryPrice,
@@ -139,10 +154,16 @@ class Price extends Equatable {
 
   factory Price.fromJson(Map<String, dynamic> json) {
     return Price(
-      deliveryPrice: json['DeliveryPrice'] as int?,
-      pickupPrice: json['PickupPrice'] as int?,
-      tablePrice: json['TablePrice'] as int?,
+      deliveryPrice: _toDouble(json['DeliveryPrice']),
+      pickupPrice: _toDouble(json['PickupPrice']),
+      tablePrice: _toDouble(json['TablePrice']),
     );
+  }
+
+  static double? _toDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value.toDouble();
+    return value as double?;
   }
 
   @override
@@ -156,7 +177,8 @@ class QuantityInfo extends Equatable {
 
   factory QuantityInfo.fromJson(Map<String, dynamic> json) {
     return QuantityInfo(
-      quantity: json['Quantity'] != null ? Quantity.fromJson(json['Quantity']) : null,
+      quantity:
+          json['Quantity'] != null ? Quantity.fromJson(json['Quantity']) : null,
     );
   }
 
@@ -188,25 +210,38 @@ class Quantity extends Equatable {
 class SuspensionRules extends Equatable {
   const SuspensionRules();
 
-  factory SuspensionRules.fromJson(Map<String, dynamic> json) => const SuspensionRules();
+  factory SuspensionRules.fromJson(Map<String, dynamic> json) =>
+      const SuspensionRules();
 
   @override
   List<Object?> get props => [];
 }
 
 class ModifierGroupRules extends Equatable {
-  const ModifierGroupRules();
+  final List<String>? ids;
+  final List<dynamic>? overrides;
 
-  factory ModifierGroupRules.fromJson(Map<String, dynamic> json) => const ModifierGroupRules();
+  const ModifierGroupRules({
+    this.ids,
+    this.overrides,
+  });
+
+  factory ModifierGroupRules.fromJson(Map<String, dynamic> json) {
+    return ModifierGroupRules(
+      ids: (json['IDs'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      overrides: json['Overrides'] as List<dynamic>?,
+    );
+  }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [ids, overrides];
 }
 
 class RewardGroupRules extends Equatable {
   const RewardGroupRules();
 
-  factory RewardGroupRules.fromJson(Map<String, dynamic> json) => const RewardGroupRules();
+  factory RewardGroupRules.fromJson(Map<String, dynamic> json) =>
+      const RewardGroupRules();
 
   @override
   List<Object?> get props => [];
@@ -224,7 +259,8 @@ class TaxInfo extends Equatable {
 class NutrientData extends Equatable {
   const NutrientData();
 
-  factory NutrientData.fromJson(Map<String, dynamic> json) => const NutrientData();
+  factory NutrientData.fromJson(Map<String, dynamic> json) =>
+      const NutrientData();
 
   @override
   List<Object?> get props => [];
@@ -242,7 +278,8 @@ class DishInfo extends Equatable {
 class VisibilityInfo extends Equatable {
   const VisibilityInfo();
 
-  factory VisibilityInfo.fromJson(Map<String, dynamic> json) => const VisibilityInfo();
+  factory VisibilityInfo.fromJson(Map<String, dynamic> json) =>
+      const VisibilityInfo();
 
   @override
   List<Object?> get props => [];
@@ -251,17 +288,24 @@ class VisibilityInfo extends Equatable {
 class ProductInfo extends Equatable {
   const ProductInfo();
 
-  factory ProductInfo.fromJson(Map<String, dynamic> json) => const ProductInfo();
+  factory ProductInfo.fromJson(Map<String, dynamic> json) =>
+      const ProductInfo();
 
   @override
   List<Object?> get props => [];
 }
 
 class MetaData extends Equatable {
-  const MetaData();
+  final bool? isDealProduct;
 
-  factory MetaData.fromJson(Map<String, dynamic> json) => const MetaData();
+  const MetaData({this.isDealProduct});
+
+  factory MetaData.fromJson(Map<String, dynamic> json) {
+    return MetaData(
+      isDealProduct: json['IsDealProduct'] as bool?,
+    );
+  }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [isDealProduct];
 }

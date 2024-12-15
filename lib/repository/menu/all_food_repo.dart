@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'menu_repo.dart';
+import 'all_food.dart';
 
-class MenuRepoData implements MenuRepo {
+class AllFoodRepo implements AllFood {
   @override
   Future<String> fetchMenus() async {
     try {
