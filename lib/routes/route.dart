@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_ordering_application/screens/category_screen.dart';
+import 'package:food_ordering_application/screens/home.dart';
 import 'package:food_ordering_application/screens/menu_screen.dart';
 import 'package:food_ordering_application/screens/modifier_screen.dart';
+import 'package:food_ordering_application/screens/single_view_product.dart';
 
 import '../models/category_model.dart';
 import '../models/item_model.dart';
@@ -11,6 +13,10 @@ class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
       case '/':
+        return MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        );
+      case '/menu_screen':
         return MaterialPageRoute(
           builder: (context) => const MenuScreen(),
         );
@@ -30,6 +36,10 @@ class AppRoutes {
           builder: (context) => MenuItemScreen(
             menuEntities: menuEntities,
           ),
+        );
+        case '/single_view_product_screen':
+        return MaterialPageRoute(
+          builder: (context) => const SingleViewProduct(),
         );
       case '/modifier_item_screen':
         final args = setting.arguments as Map<String, dynamic>;

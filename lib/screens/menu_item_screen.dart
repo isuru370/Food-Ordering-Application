@@ -72,9 +72,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                   return InkWell(
                     onTap: () {
                       Navigator.of(context, rootNavigator: true)
-                          .pushNamed('/modifier_item_screen', arguments: {
-                        'modifier_item_roles': item.modifierGroupRules
-                      });
+                          .pushNamed('/single_view_product_screen');
                     },
                     child: Card(
                       elevation: 5,
@@ -150,6 +148,16 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                               ),
                             ),
                           ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushNamed('/modifier_item_screen',
+                                        arguments: {
+                                      'modifier_item_roles':
+                                          item.modifierGroupRules
+                                    });
+                              },
+                              icon: const Icon(Icons.arrow_forward))
                         ],
                       ),
                     ),

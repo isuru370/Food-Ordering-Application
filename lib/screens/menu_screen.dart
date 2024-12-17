@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ordering_application/components/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import '../models/menu_model.dart';
 import '../provider/menu_provider/menu_provider.dart';
@@ -7,14 +8,14 @@ class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
   @override
-  _MenuScreenState createState() => _MenuScreenState();
+  State<MenuScreen> createState() => _MenuScreenState();
 }
 
 class _MenuScreenState extends State<MenuScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch menus after the widget is fully built
+    // Fetch menus after the widget
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final menuProvider = Provider.of<MenuProvider>(context, listen: false);
       menuProvider.fetchMenus();
@@ -64,18 +65,13 @@ class _MenuScreenState extends State<MenuScreen> {
     final menuProvider = Provider.of<MenuProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        title: const Text('Menu', style: TextStyle(fontSize: 24)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // search functionality if needed
-            },
-          ),
-        ],
-      ),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(120),
+          child: CustomAppBar(
+            appBarTitle: 'Menu',
+            notificationOnPressed: () {},
+            cartOnPressed: () {},
+          )),
       body: menuProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : menuProvider.errorMessage != null
@@ -98,7 +94,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 8.0,
                         mainAxisSpacing: 8.0,
-                        childAspectRatio: 3 / 2.5,
+                        childAspectRatio: 3 / 3.5,
                       ),
                       itemBuilder: (context, index) {
                         final menu = menuProvider.menuList[index];
@@ -108,6 +104,9 @@ class _MenuScreenState extends State<MenuScreen> {
 
                         return Card(
                           elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: InkWell(
                             onTap: () {
                               // Navigate to Category Screen
@@ -123,8 +122,33 @@ class _MenuScreenState extends State<MenuScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const CircleAvatar(
-                                  child: Icon(Icons.restaurant_menu),
+                                // Custom Shop Button
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Colors.orangeAccent,
+                                        Colors.deepOrange
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.orange.withOpacity(0.5),
+                                        blurRadius: 6,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Icon(
+                                    Icons.restaurant_rounded,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
@@ -140,9 +164,26 @@ class _MenuScreenState extends State<MenuScreen> {
                                   availability != null
                                       ? 'Available today: $availability'
                                       : 'No availability data',
-                                  style: const TextStyle(fontSize: 12),
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pushNamed('/');
+                                        },
+                                        icon: const Icon(
+                                          Icons.home_work_outlined,
+                                          size: 30,
+                                        ))
+                                  ],
+                                )
                               ],
                             ),
                           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_ordering_application/provider/modifier_provider.dart';
+import 'package:food_ordering_application/provider/quantity_provider.dart';
+import 'package:food_ordering_application/provider/select_menu_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'app_view.dart';
@@ -25,6 +27,12 @@ class MyApp extends StatelessWidget {
       ),
       ChangeNotifierProvider(
         create: (_) => ModifierProvider(allFoodRepo: AllFoodRepo()),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => SelectMenuProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => QuantityProvider(),
       ),
     ], child: const FoodOrderingApp());
   }

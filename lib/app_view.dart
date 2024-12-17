@@ -10,7 +10,7 @@ class FoodOrderingApp extends StatelessWidget {
       title: 'Food Ordering App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-      initialRoute: '/',
+      initialRoute: '/menu_screen',
       onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }
